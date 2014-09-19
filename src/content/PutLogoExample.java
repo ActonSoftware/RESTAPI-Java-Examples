@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class PutLogoExample
 {
-	static String BASE_URL         = "https://restapi.actonsoftware.com/";
+	static String BASE_URL         = "https://restapi.actonsoftware.com/api/1/";
 	public static void main(String[] args)
 		{
 			putLogoUsingFile();
@@ -26,23 +26,22 @@ public class PutLogoExample
 		{
 		try
 			{
-			String imagelink = "http://www.gstatic.com/hostedimg/58dd96b6262d32ce_large";
-			// provide logoid
-			String id = "<Provide Logo Id>";
+			String imagelink = "<Provide image link url>";
+			String id = "<Provide logo id>";
 			String accessToken  = Utility.getAccessToken();
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.put(BASE_URL + "api/1/logo/"+id)
+			HttpResponse<String> jsonResponse = Unirest.put(BASE_URL + "logo/"+id)
 					.header("accept", "application/json")
-					.field("name", "testfilcqce2")
+					.field("name", "testapiputlogo")
 					.field("imagelink", imagelink)
-					.field("alttext", "aewqltrr")
-					.field("tooltip", "atctaa")
-					.field("targeturl", "https://in.yahoo.com/")
-					.asJson();
+					.field("alttext", "testapiputalttext")
+					.field("tooltip", "testapiputtooltip")
+					.field("targeturl", "https://yahoo.com/")
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-				JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
+				String jsonResponseBody = jsonResponse.getBody();
 				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
 				System.out.println("The response is : "+ jsonResponse);
@@ -58,23 +57,22 @@ public class PutLogoExample
 		{
 		try
 			{
-			File file = new File("puttest.jpeg");
-			// provide logoid
-			String id = "<Provide Logo Id>";
+			File file = new File("<Provide Logo image>");
+			String id = "<Provide logo id>";
 			String accessToken  = Utility.getAccessToken();
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.put(BASE_URL + "api/1/logo/"+id)
+			HttpResponse<String> jsonResponse = Unirest.put(BASE_URL + "logo/"+id)
 					.header("accept", "application/json")
-					.field("name", "testfile")
-					.field("alttext", "newalttext")
-					.field("tooltip", "newtooltip")
-					.field("targeturl", "https://in.yahoo.com/")
+					.field("name", "testapiputlogo2")
+					.field("alttext", "testapiputalttext2")
+					.field("tooltip", "testapiputtooltip2")
+					.field("targeturl", "https://yahoo.com/")
 					.field("file", file)
-					.asJson();
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-				JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
+				String jsonResponseBody = jsonResponse.getBody();
 				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
 				System.out.println("The response is : "+ jsonResponse);
