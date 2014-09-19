@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class PostLogoExample
 {
-	static String BASE_URL         = "https://restapi.actonsoftware.com/";
+	static String BASE_URL         = "https://restapi.actonsoftware.com/api/1/";
 	public static void main(String[] args)
 		{
 				postLogoUsingFile();
@@ -26,24 +26,24 @@ public class PostLogoExample
 
 		try
 			{
-			File file = new File("posttest.jpeg");
+			File file = new File("<Provide Logo image>");
 			String accessToken  = Utility.getAccessToken();
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.post(BASE_URL + "api/1/logo")
+			HttpResponse<String> jsonResponse = Unirest.post(BASE_URL + "logo")
 					.header("accept", "application/json")
-					.field("name", "testpostlogo")
-					.field("alttext", "examplealttext")
-					.field("tooltip", "exampletooltip")
-					.field("targeturl", "https://www.google.co.in/")
+					.field("name", "testapipostlogo")
+					.field("alttext", "testapialttext")
+					.field("tooltip", "testapitooltip")
+					.field("targeturl", "https://www.google.com/")
 					.field("file", file)
-					.asJson();
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-				JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
+				String jsonResponseBody = jsonResponse.getBody();
 				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
-				System.out.println("The response is : "+ jsonResponse);
+				System.out.println("The response is : "+ jsonResponse.toString());
 			}
 			}
 		catch (UnirestException e)
@@ -57,21 +57,21 @@ public class PostLogoExample
 
 		try
 			{
-			String imagelink = "http://www.gstatic.com/hostedimg/6d57e3f765338942_landing";
+			String imagelink = "<Provide image link url>";
 			String accessToken  = Utility.getAccessToken();
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.post(BASE_URL + "api/1/logo")
+			HttpResponse<String> jsonResponse = Unirest.post(BASE_URL + "logo")
 					.header("accept", "application/json")
-					.field("name", "testfisle2")
+					.field("name", "testapipostlogo2")
 					.field("imagelink", imagelink)
-					.field("alttext", "altrr")
-					.field("tooltip", "attaa")
-					.field("targeturl", "https://www.google.co.in/")
-					.asJson();
+					.field("alttext", "testapialttext2")
+					.field("tooltip", "testapitooltip2")
+					.field("targeturl", "https://www.google.com/")
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-				JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
+				String jsonResponseBody = jsonResponse.getBody();
 				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
 				System.out.println("The response is : "+ jsonResponse);
