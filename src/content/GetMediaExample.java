@@ -15,7 +15,33 @@ public class GetMediaExample
 	static String BASE_URL         = "https://restapi.actonsoftware.com/api/1/";
 	public static void main(String[] args)
 		{
+				getMedia();
 				getMediaById();
+		}
+
+	public static void getMedia()
+		{
+		try
+			{
+			String accessToken  = Utility.getAccessToken();
+			Unirest.setHttpClient(Utility.makeClient());
+			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
+			HttpResponse<String> jsonResponse = Unirest.get(BASE_URL+"media")
+					.header("accept", "application/json")
+					.asString();
+
+			if(jsonResponse.getCode()==200){
+				String jsonResponseBody = jsonResponse.getBody();
+				System.out.println("The response body is : "+jsonResponseBody );
+			}else {
+				System.out.println("The response is : "+ jsonResponse);
+			}
+
+			}
+		catch (UnirestException e)
+			{
+			e.printStackTrace();
+			}
 		}
 
 	public static void getMediaById()
@@ -23,16 +49,15 @@ public class GetMediaExample
 		try
 			{
 			String accessToken  = Utility.getAccessToken();
-			System.out.println("The accessToken is : "+accessToken);
-			String id = "f-09f5";
+			String id = "<Provide media id>";
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.get(BASE_URL+"media/"+id)
+			HttpResponse<String> jsonResponse = Unirest.get(BASE_URL+"media/"+id)
 					.header("accept", "application/json")
-					.asJson();
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-				JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
+				String jsonResponseBody = jsonResponse.getBody();
 				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
 				System.out.println("The response is : "+ jsonResponse);
