@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class PostMediaExample
 {
-	static String BASE_URL         = "https://restapi.actonsoftware.com/actonapi/1/";
+	static String BASE_URL         = "https://restapi.actonsoftware.com/api/1/";
 	public static void main(String[] args)
 		{
 			postMedia();
@@ -24,20 +24,20 @@ public class PostMediaExample
 		{
 		try
 			{
-			File file = new File("TestMedia.pdf");
+			File file = new File("<Provide file>");
 			String accessToken  = Utility.getAccessToken();
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.post(BASE_URL + "media")
+			HttpResponse<String> jsonResponse = Unirest.post(BASE_URL + "media")
 					.header("accept", "application/json")
 					.field("file", file)
-					.asJson();
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-			JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
-			System.out.println("The response body is : "+jsonResponseBody );
+				String jsonResponseBody = jsonResponse.getBody();
+				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
-			System.out.println("The response is : "+ jsonResponse);
+				System.out.println("The response is : "+ jsonResponse);
 			}
 			}
 		catch (UnirestException e)
