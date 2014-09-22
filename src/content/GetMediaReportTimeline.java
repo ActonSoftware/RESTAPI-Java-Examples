@@ -12,7 +12,7 @@ import util.Utility;
  */
 public class GetMediaReportTimeline
 {
-	static String BASE_URL         = "https://ec2-174-129-5-4.compute-1.amazonaws.com:443/actonapi/1/";
+	static String BASE_URL         = "https://restapi.actonsoftware.com/api/1/";
 	public static void main(String[] args)
 		{
 		getMediaReportTimelineById();
@@ -23,16 +23,15 @@ public class GetMediaReportTimeline
 		try
 			{
 			String accessToken  = Utility.getAccessToken();
-			System.out.println("The accessToken is : "+accessToken);
-			String id = "f-0757";
+			String id = "<Provide media id>";
 			Unirest.setHttpClient(Utility.makeClient());
 			Unirest.setDefaultHeader("Authorization", "Bearer " + accessToken);
-			HttpResponse<JsonNode> jsonResponse = Unirest.get(BASE_URL+"media/f-0757/report/timeline")
+			HttpResponse<String> jsonResponse = Unirest.get(BASE_URL+"media/"+id+"/report/timeline")
 					.header("accept", "application/json")
-					.asJson();
+					.asString();
 
 			if(jsonResponse.getCode()==200){
-				JSONObject jsonResponseBody = jsonResponse.getBody().getObject();
+				String jsonResponseBody = jsonResponse.getBody();
 				System.out.println("The response body is : "+jsonResponseBody );
 			}else {
 				System.out.println("The response is : "+ jsonResponse);
